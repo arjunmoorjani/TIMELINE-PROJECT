@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="theme-dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,16 @@
   <main class="app">
     <section class="workspace">
       <header class="toolbar">
+        <label>Project
+          <select id="projectSelect"></select>
+        </label>
+        <button id="openProjectBtn" type="button">Open</button>
+        <button id="newProjectBtn" type="button">New Project</button>
+        <button id="renameProjectBtn" type="button">Rename</button>
+        <button id="duplicateProjectBtn" type="button">Duplicate</button>
+        <button id="deleteProjectBtn" type="button">Delete</button>
+        <button id="saveAsProjectBtn" type="button">Save As</button>
+
         <label>Zoom
           <input id="zoomSlider" type="range" min="6" max="220" value="40" step="1" />
         </label>
@@ -27,6 +37,7 @@
         <button id="exportJsonBtn" type="button">Export JSON</button>
         <button id="importJsonBtn" type="button">Import JSON</button>
         <input id="importJsonInput" type="file" accept="application/json" hidden />
+        <button id="themeToggleBtn" type="button">Theme: Dark</button>
       </header>
 
       <div id="viewport" class="viewport">
@@ -34,16 +45,40 @@
       </div>
     </section>
 
-    <aside class="sidebar">
-      <h1>Timeline Editor</h1>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-head">
+        <h1>Timeline Editor</h1>
+        <div class="sidebar-controls">
+          <label class="wide-toggle">
+            <input id="sidebarWideToggle" type="checkbox" />
+            Wide
+          </label>
+          <button id="sidebarCollapseBtn" type="button" aria-label="Collapse sidebar">◀</button>
+        </div>
+      </div>
+      <button id="sidebarExpandBtn" class="sidebar-expand-btn" type="button" aria-label="Expand sidebar">▶</button>
 
       <form id="eventForm" class="form">
+        <div class="field row">
+          <div>
+            <label for="itemTypeSelect">Type</label>
+            <select id="itemTypeSelect">
+              <option value="point">Point</option>
+              <option value="span">Span</option>
+            </select>
+          </div>
+          <div>
+            <label for="zInput">Layer (z)</label>
+            <input id="zInput" type="number" step="1" value="0" />
+          </div>
+        </div>
+
         <div class="field">
           <label for="titleInput">Event name</label>
           <input id="titleInput" type="text" required />
         </div>
 
-        <div class="field row">
+        <div id="pointDateFields" class="field row">
           <div>
             <label for="yearInput">Date</label>
             <input id="yearInput" type="number" step="1" value="200" />
@@ -54,6 +89,35 @@
               <option value="CE">CE</option>
               <option value="BCE">BCE</option>
             </select>
+          </div>
+        </div>
+
+        <div id="spanDateFields" class="field span-fields" hidden>
+          <div class="field row">
+            <div>
+              <label for="startYearInput">Start year</label>
+              <input id="startYearInput" type="number" step="1" value="200" />
+            </div>
+            <div>
+              <label for="startEraSelect">Era</label>
+              <select id="startEraSelect">
+                <option value="CE">CE</option>
+                <option value="BCE">BCE</option>
+              </select>
+            </div>
+          </div>
+          <div class="field row">
+            <div>
+              <label for="endYearInput">End year</label>
+              <input id="endYearInput" type="number" step="1" value="250" />
+            </div>
+            <div>
+              <label for="endEraSelect">Era</label>
+              <select id="endEraSelect">
+                <option value="CE">CE</option>
+                <option value="BCE">BCE</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -129,6 +193,8 @@
           <button id="saveEventBtn" type="submit">Save Changes</button>
           <button id="deleteEventBtn" type="button">Delete</button>
           <button id="clearFormBtn" type="button">Clear</button>
+          <button id="bringFrontBtn" type="button">Bring Front</button>
+          <button id="sendBackBtn" type="button">Send Back</button>
         </div>
       </form>
     </aside>
