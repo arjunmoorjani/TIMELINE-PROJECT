@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timeline Editor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="workspace">
+      <header class="toolbar">
+        <label>Zoom
+          <input id="zoomSlider" type="range" min="6" max="220" value="40" step="1" />
+        </label>
+        <span id="zoomValue">40 px/year</span>
+
+        <label>Min Year
+          <input id="minYearInput" type="number" value="-1000" />
+        </label>
+        <label>Max Year
+          <input id="maxYearInput" type="number" value="2100" />
+        </label>
+        <button id="applyRangeBtn" type="button">Apply Range</button>
+
+        <button id="exportPngBtn" type="button">Export PNG</button>
+        <button id="exportJsonBtn" type="button">Export JSON</button>
+        <button id="importJsonBtn" type="button">Import JSON</button>
+        <input id="importJsonInput" type="file" accept="application/json" hidden />
+      </header>
+
+      <div id="viewport" class="viewport">
+        <svg id="timelineSvg" xmlns="http://www.w3.org/2000/svg" aria-label="Timeline canvas"></svg>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <h1>Timeline Editor</h1>
+
+      <form id="eventForm" class="form">
+        <div class="field">
+          <label for="titleInput">Event name</label>
+          <input id="titleInput" type="text" required />
+        </div>
+
+        <div class="field row">
+          <div>
+            <label for="yearInput">Date</label>
+            <input id="yearInput" type="number" step="1" value="200" />
+          </div>
+          <div>
+            <label for="eraSelect">Era</label>
+            <select id="eraSelect">
+              <option value="CE">CE</option>
+              <option value="BCE">BCE</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field row">
+          <div>
+            <label for="colorInput">Color</label>
+            <input id="colorInput" type="color" value="#4f46e5" />
+          </div>
+          <div>
+            <label for="hexInput">Hex</label>
+            <input id="hexInput" type="text" value="#4f46e5" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notesInput">Notes</label>
+          <textarea id="notesInput" rows="3"></textarea>
+        </div>
+
+        <div class="field row">
+          <div>
+            <label for="imageInput">Image</label>
+            <input id="imageInput" type="file" accept="image/*" />
+          </div>
+          <div>
+            <label for="imgFitSelect">Fit mode</label>
+            <select id="imgFitSelect">
+              <option value="cover">cover</option>
+              <option value="contain">contain</option>
+            </select>
+            <button id="removeImageBtn" type="button">Remove image</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-head">
+            <label>Resources</label>
+            <button id="addResourceBtn" type="button">Add</button>
+          </div>
+          <div id="resourcesList" class="resources"></div>
+        </div>
+
+        <div class="field">
+          <label>Categories</label>
+          <div id="categoryPicker" class="category-picker">
+            <button id="categoryToggleBtn" type="button" class="picker-toggle">Select categories</button>
+            <div id="categoryMenu" class="picker-menu" hidden></div>
+          </div>
+          <div id="selectedCategoryChips" class="chips"></div>
+        </div>
+
+        <div class="field row add-category">
+          <div>
+            <label for="newCategoryName">New category name</label>
+            <input id="newCategoryName" type="text" placeholder="Military" />
+          </div>
+          <div>
+            <label for="newCategoryCode">Short code (2-6)</label>
+            <input id="newCategoryCode" type="text" maxlength="6" placeholder="MIL" />
+          </div>
+          <div class="add-btn-wrap">
+            <button id="addCategoryBtn" type="button">Add Category</button>
+          </div>
+        </div>
+
+        <div class="field code-box">
+          <div>Code: <span id="codePreview">GEN-0200-01</span></div>
+          <div>Selected event id: <span id="selectedIdPreview">None</span></div>
+        </div>
+
+        <div class="actions">
+          <button id="addEventBtn" type="button">Add Event</button>
+          <button id="saveEventBtn" type="submit">Save Changes</button>
+          <button id="deleteEventBtn" type="button">Delete</button>
+          <button id="clearFormBtn" type="button">Clear</button>
+        </div>
+      </form>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
